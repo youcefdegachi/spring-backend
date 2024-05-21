@@ -1,12 +1,12 @@
 package com.example.ecommerce.services;
 
-import com.example.ecommerce.repository.ClientRepository;
+import com.example.ecommerce.repository.CommandeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+public class CommandeService {
 
-public class ClientService {
     @Autowired
-    private ClientRepository client;
+    private CommandeRepository commande;
 }
