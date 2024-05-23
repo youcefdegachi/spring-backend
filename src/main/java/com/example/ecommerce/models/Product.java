@@ -22,4 +22,7 @@ public class Product {
     private Integer qtestock;
 
 
+    public Product save(Product product) {
+        return product;
+    }
 }

@@ -13,20 +13,27 @@ public class CommandeService {
 
     @Autowired
     private CommandeRepository commande;
+
+    public List<Commande> getAllCommandes() {
+        return commande.findAll();
+    }
     public List<Commande> getCommande(){
         return commande.findAll();
     }
 
+    public Commande getCommandeById(Long id) {
+        return commande.findById(id).orElse(null);
+    }
     public Commande save(Commande s) {
         return commande.saveAndFlush(s);
     }
 
-    public Commande findById(Long id) {
-        return commande.findById(id)
-                .orElseThrow(() -> new CommandeNotFoundException("commande not found with id: " + id));
-    }
+//    public Commande findById(Long id) {
+//        return commande.findById(id)
+//                .orElseThrow(() -> new CommandeNotFoundException("commande not found with id: " + id));
+//    }
 
-    public void delete(Commande s) {
-        commande.delete(s);
+    public void delete(Long s) {
+        commande.delete(Commande.getCommandeById(s));
     }
 }

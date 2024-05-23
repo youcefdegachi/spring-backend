@@ -30,4 +30,14 @@ public class Commande {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    public static Commande getCommandeById(Long id) {
+        return getCommandeById(id);
+    }
+
+//    public static Commande getCommandeById(Long id) {
+//    }
+
+    public Commande save(Commande commande) {
+        return commande;
+    }
 }

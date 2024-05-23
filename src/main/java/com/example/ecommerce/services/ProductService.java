@@ -12,20 +12,26 @@ import java.util.List;
 public class ProductService {
     @Autowired
     private ProductRepository product;
+
+    
     public List<Product> getProduct(){
         return product.findAll();
     }
+    public Product getProductById(Long id) {
+        return product.findById(id).orElse(null);
+    }
+
 
     public Product save(Product s) {
         return product.saveAndFlush(s);
     }
 
-    public Product findById(Long id) {
-        return product.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
-    }
+//    public Product findById(Long id) {
+//        return product.findById(id)
+//                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
+//    }
 
-    public void delete(Product s) {
+    public void delete(Long s) {
         product.delete(s);
     }
 }

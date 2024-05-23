@@ -23,6 +23,10 @@ public class Client {
     private String adressecl;
     private String telcl;
 
+    public Client save(Client client) {
+        return client;
+    }
+
 //    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 //    private Set<Commande> commandes;
 }
