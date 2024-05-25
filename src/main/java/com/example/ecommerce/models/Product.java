@@ -14,12 +14,12 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long artId;
-
-    private String codeart;
+    private String pname;
     private String desart;
     private String couleur;
     private Double puart;
     private Integer qtestock;
+//    private String image;
 
 
     public Product save(Product product) {

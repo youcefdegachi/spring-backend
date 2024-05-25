@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -21,9 +22,22 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping
-    public List<Product> getAllCommandes() {
-        return productService.getProduct();
+    @GetMapping("/check")
+    public String check(){
+        return "Working...!";
+    }
+//    @GetMapping("/all")
+//    public List<Product> getAllProduct() {
+//        return productService.getProduct();
+//    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Product>> getAllProduct(){
+        try{
+            return new ResponseEntity<List<Product>>(productService.getProduct(), HttpStatus.OK);
+        }catch (NoProductExistInRepository e){
+            return new ResponseEntity("List Not Found", HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")
@@ -31,18 +45,24 @@ public class ProductController {
         try{
             return ResponseEntity.ok().body(productService.getProduct());
         }catch (NoClientExistInRepository e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("List Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product Not Found");
         }
     }
 
+//    @PostMapping("/add")
+//    public Product createProduct(@RequestBody Product product) {
+//        return product.save(product);
+//    }
     @PostMapping("/add")
-    public Product createProduct(@RequestBody Product product) {
-        return product.save(product);
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) throws IOException {
+        Product savedProduct = productService.save(product);
+        return new ResponseEntity<Product>(savedProduct,HttpStatus.OK);
+//        return new  ResponseEntity<Product>(savedProduct,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productService.delete(id);
+        productService.delete( productService.findById(id));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
