@@ -16,15 +16,15 @@ import java.util.List;
 @RequestMapping(path="/client")
 public class ClientController {
     @Autowired
-    private final ClientService client;
+    private final ClientService clientService;
     @Autowired
     public ClientController(ClientService clientService) {
-        this.client = clientService;
+        this.clientService = clientService;
     }
     @GetMapping("/all")
     public ResponseEntity<?> getAll(){
         try{
-            return ResponseEntity.ok().body(client.getAll());
+            return ResponseEntity.ok().body(clientService.getAll());
         }catch (NoClientExistInRepository e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("List Not Found");
         }
@@ -36,9 +36,13 @@ public class ClientController {
     }
     @DeleteMapping("/{ClientId}")
     public ResponseEntity<String> deleteClient(@PathVariable("ClientId") Long id){
-        client.delete(client.findById(id));
+        clientService.delete(clientService.findById(id));
         return ResponseEntity.ok().body("User with id "+id+" Deleted");
     }
+
+
+
+
 //    public void deleteClient(@PathVariable(value = "id") long id) {
 //        client.delete(client.findById(id));
 //    }

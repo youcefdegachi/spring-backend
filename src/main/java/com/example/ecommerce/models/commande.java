@@ -20,7 +20,7 @@ public class Commande {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long comId;
+    private Long Id;
 
     private String numcom;
     private Date datecom;
@@ -30,14 +30,14 @@ public class Commande {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    public static Commande getCommandeById(Long id) {
-        return getCommandeById(id);
-    }
+//    public Commande getCommandeById(Long id) {
+//        return getCommandeById(id);
+//    }
 
 //    public static Commande getCommandeById(Long id) {
 //    }
 
-    public Commande save(Commande commande) {
-        return commande;
-    }
+//    public Commande save(Commande commande) {
+//        return commande;
+//    }
 }

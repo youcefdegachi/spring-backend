@@ -11,27 +11,27 @@ import java.util.List;
 @Service
 public class ProductService {
     @Autowired
-    private ProductRepository product;
+    private ProductRepository productRepository;
 
     
     public List<Product> getProduct(){
-        return product.findAll();
+        return productRepository.findAll();
     }
     public Product getProductById(Long id) {
-        return product.findById(id).orElse(null);
+        return productRepository.findById(id).orElse(null);
     }
 
 
     public Product save(Product s) {
-        return product.saveAndFlush(s);
+        return productRepository.saveAndFlush(s);
     }
 
-//    public Product findById(Long id) {
-//        return product.findById(id)
-//                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
-//    }
+    public Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
+    }
 
     public void delete(Long s) {
-        product.delete(s);
+        productRepository.delete(s);
     }
 }

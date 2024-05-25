@@ -12,20 +12,20 @@ import java.util.List;
 public class CommandeService {
 
     @Autowired
-    private CommandeRepository commande;
+    private CommandeRepository commandeRepository;
 
     public List<Commande> getAllCommandes() {
-        return commande.findAll();
+        return commandeRepository.findAll();
     }
     public List<Commande> getCommande(){
-        return commande.findAll();
+        return commandeRepository.findAll();
     }
 
     public Commande getCommandeById(Long id) {
-        return commande.findById(id).orElse(null);
+        return commandeRepository.findById(id).orElse(null);
     }
     public Commande save(Commande s) {
-        return commande.saveAndFlush(s);
+        return commandeRepository.saveAndFlush(s);
     }
 
 //    public Commande findById(Long id) {
@@ -34,6 +34,6 @@ public class CommandeService {
 //    }
 
     public void delete(Long s) {
-        commande.delete(Commande.getCommandeById(s));
+        commandeRepository.deleteById(s);
     }
 }

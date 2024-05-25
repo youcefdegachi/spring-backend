@@ -16,31 +16,31 @@ import java.util.List;
 @RequestMapping(path="/commande")
 public class CommandeController {
     @Autowired
-    private CommandeService commande;
+    private CommandeService commandeService;
 
     @GetMapping
     public List<Commande> getAllCommandes() {
-        return commande.getAllCommandes();
+        return commandeService.getAllCommandes();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Commande> getCommandeById(@PathVariable Long id) {
-        Commande commande = Commande.getCommandeById(id);
-        if (commande != null) {
-            return new ResponseEntity<>(commande, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PostMapping("/add")
-    public Commande createCommande(@RequestBody Commande commande) {
-        return commande.save(commande);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCommande(@PathVariable Long id) {
-        commande.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Commande> getCommandeById(@PathVariable Long id) {
+//        Commande commande = Commande.getCommandeById(id);
+//        if (commande != null) {
+//            return new ResponseEntity<>(commande, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+//
+//    @PostMapping("/add")
+//    public Commande createCommande(@RequestBody Commande commande) {
+//        return commande.save(commande);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteCommande(@PathVariable Long id) {
+//        commande.delete(id);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 }
