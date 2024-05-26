@@ -19,7 +19,7 @@ public class Product {
     private String couleur;
     private Double puart;
     private Integer qtestock;
-//    private String image;
+    private String image;
 
 
     public Product save(Product product) {

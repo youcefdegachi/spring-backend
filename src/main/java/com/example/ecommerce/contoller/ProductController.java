@@ -34,6 +34,7 @@ public class ProductController {
     @GetMapping("/all")
     public ResponseEntity<List<Product>> getAllProduct(){
         try{
+
             return new ResponseEntity<List<Product>>(productService.getProduct(), HttpStatus.OK);
         }catch (NoProductExistInRepository e){
             return new ResponseEntity("List Not Found", HttpStatus.NOT_FOUND);
@@ -41,14 +42,22 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getAll(){
+    public ResponseEntity<?> getAll(@PathVariable Long id){
         try{
-            return ResponseEntity.ok().body(productService.getProduct());
+            return ResponseEntity.ok().body(productService.findById(id));
         }catch (NoClientExistInRepository e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product Not Found");
         }
     }
-
+    @GetMapping("/get/by/id/{id}")
+    public ResponseEntity<Product> getById(@PathVariable Long id){
+        try {
+//            return new ResponseEntity<Product>(productService.getById(id), HttpStatus.OK);
+            return new ResponseEntity<Product>(productService.findById(id), HttpStatus.OK);
+        }catch (NoProductExistInRepository e) {
+            return new ResponseEntity("Product not found", HttpStatus.NOT_FOUND);
+        }
+    }
 //    @PostMapping("/add")
 //    public Product createProduct(@RequestBody Product product) {
 //        return product.save(product);
@@ -66,13 +75,5 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/get/by/id/{id}")
-    public ResponseEntity<Product> getById(@PathVariable Long id){
-        try {
-//            return new ResponseEntity<Product>(productService.getById(id), HttpStatus.OK);
-            return new ResponseEntity<Product>(productService.findById(id), HttpStatus.OK);
-        }catch (NoProductExistInRepository e) {
-            return new ResponseEntity("Product not found", HttpStatus.NOT_FOUND);
-        }
-    }
+
 }

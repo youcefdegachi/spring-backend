@@ -23,6 +23,10 @@ public class Client {
     private String adressecl;
     private String telcl;
 
+    private String email;
+    private String password;
+
+
     public Client save(Client client) {
         return client;
     }
