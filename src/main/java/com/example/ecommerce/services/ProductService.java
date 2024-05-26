@@ -16,8 +16,13 @@ public class ProductService {
     private ProductRepository productRepository;
 
 
-    public List<Product> getProduct(){
-        return productRepository.findAll();
+    public List<Product> getProduct()  throws NoProductExistInRepository{
+        List<Product> all = productRepository.findAll();
+        if (all.isEmpty()) {
+            throw new NoProductExistInRepository("no product found is empty");
+        } else {
+            return all;
+        }
     }
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
