@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,11 +32,26 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("List Not Found");
         }
     }
+//    @PostMapping("/add")
+//    public ResponseEntity<Client> add1(@RequestBody Client client) throws IOException {
+//        Client user = client.save(client);
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//    }
     @PostMapping("/add")
-    public ResponseEntity<Client> add1(@RequestBody Client client) throws IOException {
-        Client user = client.save(client);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<?> add1(@RequestBody Client client) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        if (pattern.matcher(client.getEmail()).matches()) {
+            Client savedClient = clientService.save(client);
+            return new ResponseEntity<>(savedClient, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Invalid email address", HttpStatus.BAD_REQUEST);
+        }
     }
+
+
+
     @DeleteMapping("/{ClientId}")
     public ResponseEntity<String> deleteClient(@PathVariable("ClientId") Long id){
         clientService.delete(clientService.findById(id));
@@ -42,7 +60,15 @@ public class ClientController {
 
 
 
-
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Client loginRequest) {
+        Optional<Client> client = clientService.login(loginRequest.getEmail(), loginRequest.getPassword());
+        if (client.isPresent()) {
+            return new ResponseEntity<>(client.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
+        }
+    }
 //    public void deleteClient(@PathVariable(value = "id") long id) {
 //        client.delete(client.findById(id));
 //    }
